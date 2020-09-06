@@ -8,29 +8,55 @@
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th scope="col">クラス</th>
+            <th scope="col">学生コード</th>
             <th scope="col">名前</th>
+            <th scope="col">クラス</th>
             <th scope="col">グループ</th>
             <th scope="col">番号</th>
-            <th scope="col">委員会</th>
-            <th scope="col">クラブ</th>
-            <th scope="col">性格</th>
+            <th scope="col">性別</th>
+            <th scope="col">誕生日</th>
+            <th scope="col">所属クラブ</th>
+            <th scope="col">所属委員会</th>
+            <th scope="col">性格など</th>
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
         {% for student in student_list %}
         <tr>
-            <td>{{ student.classes.name }}</td>
-            <td>{{ student.students.name }}</td>
-            <td>{{ student.grade }}斑</td>
-            <td>{{ student.students.number }}</td>
-            <td>{{ student.committees.name }}</td>
-            <td>{{ student.clubs.name }}</td>
-            <td>{{ student.students.personality }}</td>
+            <td>{{ student.code }}</td>
+            <td>{{ student.name }}</td>
             <td>
-                <a href="{% url 'student_edit' student_id=student.students.id %}" class="btn btn-outline-primary btn-sm">修正</a>
-                <a href="{% url 'student_del' student_id=student.students.id %}" class="btn btn-outline-danger btn-sm">削除</a>
+                {% for podiitons in student.student_podiitons.all %}
+                {{ podiitons.classes.name }}
+                {% endfor %}
+            </td>
+            <td>
+                {% for podiitons in student.student_podiitons.all %}
+                {{ podiitons.grade }}班
+                {% endfor %}
+            </td>
+            <td>
+                {% for podiitons in student.student_podiitons.all %}
+                {{ podiitons.number }}番
+                {% endfor %}
+            </td>
+            <td>{{ student.sex }}</td>
+            <td>{{ student.birth_day }}</td>
+            <td>
+                {% for podiitons in student.student_podiitons.all %}
+                {{ podiitons.clubs.name }}:{{ podiitons.clubs_type }}
+                {% endfor %}
+            </td>
+            <td>
+                {% for podiitons in student.student_podiitons.all %}
+                {{ podiitons.committees.name }}{{ podiitons.committees_type }}
+                {% endfor %}
+            </td>
+            <td>{{ student.personality }}</td>
+            <td>
+                <a href="{% url 'student_edit' student_id=student.id %}" class="btn btn-outline-primary btn-sm">修正</a>
+                <a href="{% url 'student_del' student_id=student.id %}" class="btn btn-outline-danger btn-sm">削除</a>
             </td>
         </tr>
         {% endfor %}

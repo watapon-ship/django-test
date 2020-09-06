@@ -27,7 +27,7 @@ class Teachars(models.Model):
     position = models.CharField('担当教科', max_length=50)
     sex = models.IntegerField(verbose_name='性別', choices=GENDER_CHOICES, blank=True, null=True)
     birth_day = models.DateField(verbose_name='誕生日', blank=True, null=True)
-    personality = models.CharField('先生紹介',max_length=200)
+    personality = models.CharField('先生紹介',max_length=200, blank = True, null = True )
 
     def __str__(self):
         return self.code + ':' + self.name + '先生'
@@ -46,10 +46,9 @@ class Students(models.Model):
     sverbose_name_plural = verbose_name
     code = models.CharField('学生コード', max_length=10)
     name = models.CharField('学生名',max_length=50)
-    number = models.IntegerField('クラス番号')
     sex = models.IntegerField(verbose_name='性別', choices=GENDER_CHOICES, blank=True, null=True)
     birth_day = models.DateField(verbose_name='誕生日', blank=True, null=True)
-    personality = models.CharField('生徒紹介',max_length=200)
+    personality = models.CharField('生徒紹介',max_length=200, blank = True, null = True )
 
     def __str__(self):
         return self.code +':' + self.name
@@ -63,7 +62,7 @@ class Classes(models.Model):
     grade = models.IntegerField('学年')
     class_number = models.IntegerField('組')
     name = models.CharField('クラス名', max_length=50)
-    detail = models.CharField('学級紹介', max_length=200)
+    detail = models.CharField('学級紹介', max_length=200, blank = True, null = True)
 
     def __str__(self):
         return self.code + ':' + self.name
@@ -75,7 +74,7 @@ class Clubs(models.Model):
     sverbose_name_plural = verbose_name
     code = models.CharField('クラブコード', max_length=8)
     name = models.CharField('クラブ名', max_length=50)
-    detail = models.CharField('クラブ紹介', max_length=200)
+    detail = models.CharField('クラブ紹介', max_length=200, blank = True, null = True)
 
     def __str__(self):
         return self.code + ':' + self.name
@@ -87,7 +86,7 @@ class Committees(models.Model):
     sverbose_name_plural = verbose_name
     code = models.CharField('委員会コード', max_length=8)
     name = models.CharField('委員会名',max_length=50)
-    detail = models.CharField('委員会説明', max_length=200)
+    detail = models.CharField('委員会説明', max_length=200, blank = True, null = True)
 
     def __str__(self):
         return self.code + ':' + self.name
@@ -105,11 +104,11 @@ class TeacharPodiitons(models.Model):
     verbose_name = '教師役職'
     sverbose_name_plural = verbose_name
     years = models.ForeignKey(Years, verbose_name="年度", on_delete=models.CASCADE)
-    teachar = models.ForeignKey(Teachars, verbose_name="教師", on_delete=models.CASCADE)
-    classes = models.ForeignKey(Classes, verbose_name="担当クラス", on_delete=models.CASCADE)
+    teachar = models.ForeignKey(Teachars, verbose_name="教師", on_delete=models.CASCADE, related_name='student_podiitons')
+    classes = models.ForeignKey(Classes, verbose_name="担当クラス", on_delete=models.CASCADE, blank = True, null = True)
     classes_type = models.IntegerField(verbose_name='担任・副担任', choices=CLASS_TEACHAR_CHOICES, blank=True, null=True)
-    clubs = models.ForeignKey(Clubs, verbose_name="クラブ顧問", on_delete=models.CASCADE)
-    committees = models.ForeignKey(Committees, verbose_name="委員会顧問", on_delete=models.CASCADE)
+    clubs = models.ForeignKey(Clubs, verbose_name="クラブ顧問", on_delete=models.CASCADE, blank = True, null = True)
+    committees = models.ForeignKey(Committees, verbose_name="委員会顧問", on_delete=models.CASCADE, blank = True, null = True)
 
     def __str__(self):
         return self.teachar.name + "の役職"
@@ -139,13 +138,14 @@ class StudentPodiitons(models.Model):
     verbose_name = '生徒役職'
     sverbose_name_plural = verbose_name
     years = models.ForeignKey(Years, verbose_name="年度", on_delete=models.CASCADE)
-    students = models.ForeignKey(Students, verbose_name="生徒", on_delete=models.CASCADE)
-    classes = models.ForeignKey(Classes, verbose_name="所属クラス", on_delete=models.CASCADE)
-    clubs = models.ForeignKey(Clubs, verbose_name="クラブ活動", on_delete=models.CASCADE)
-    clubs_type = models.IntegerField(verbose_name='クラブ役職', choices=CLAB_TYPE_CHOICES, blank=True, null=True)
-    committees = models.ForeignKey(Committees, verbose_name="委員会", on_delete=models.CASCADE)
-    committees_type = models.IntegerField(verbose_name='委員会役職', choices=COMMITTEES_TYPE_CHOICES, blank=True, null=True)
+    students = models.ForeignKey(Students, verbose_name="生徒", on_delete=models.CASCADE, blank = True, null = False, related_name='student_podiitons')
+    classes = models.ForeignKey(Classes, verbose_name="所属クラス", on_delete=models.CASCADE, blank = True, null = True)
     grade = models.IntegerField('グループ（1班,2班）')
+    number = models.IntegerField('クラス番号')
+    clubs = models.ForeignKey(Clubs, verbose_name="クラブ活動", on_delete=models.CASCADE, blank = True, null = True)
+    clubs_type = models.IntegerField(verbose_name='クラブ役職', choices=CLAB_TYPE_CHOICES, blank=True, null=True)
+    committees = models.ForeignKey(Committees, verbose_name="委員会", on_delete=models.CASCADE, blank = True, null = True)
+    committees_type = models.IntegerField(verbose_name='委員会役職', choices=COMMITTEES_TYPE_CHOICES, blank=True, null=True)
 
     def __str__(self):
         return self.students.name + "の役職"
