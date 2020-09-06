@@ -33,35 +33,33 @@
         </tr>
     </thead>
     <tbody>
-        {% for student in student_list %}
-        {% with podiitons=student.student_podiitons.first %}
+        {% for podiiton in student_list %}
         <tr>
-            <td>{{ student.code }}</td>
-            <td>{{ student.name }}</td>
+            <td>{{ podiiton.students.code }}</td>
+            <td>{{ podiiton.students.name }}</td>
             <td>
-                {{ podiitons.classes.name }}
+                {{ podiiton.classes.name }}
             </td>
             <td>
-                {{ podiitons.grade }}班
+                {{ podiiton.grade }}班
             </td>
             <td>
-                {{ podiitons.number }}番
+                {{ podiiton.number }}番
             </td>
-            <td>{{ student.sex }}</td>
-            <td>{{ student.birth_day }}</td>
+            <td>{{ podiiton.students.get_sex_display }}</td>
+            <td>{{ podiiton.students.birth_day }}</td>
             <td>
-                {{ podiitons.clubs.name }}:{{ podiitons.clubs_type }}
+                {{ podiiton.clubs.name }}:{{ podiiton.get_clubs_type_display }}
             </td>
             <td>
-                {{ podiitons.committees.name }}{{ podiitons.committees_type }}
+                {{ podiiton.committees.name }}{{ podiiton.get_committees_type_display }}
             </td>
-            <td>{{ student.personality }}</td>
+            <td>{{ podiiton.students.personality }}</td>
             <td>
-                <a href="{% url 'student_edit' student_id=student.id year_id=2017 %}" class="btn btn-outline-primary btn-sm">生徒情報修正</a>
-                <a href="{% url 'student_del' student_id=student.id %}" class="btn btn-outline-danger btn-sm">転校</a>
+                <a href="{% url 'student_edit' student_id=podiiton.students.id year_id=podiiton.years.id %}" class="btn btn-outline-primary btn-sm">生徒情報修正</a>
+                <a href="{% url 'student_del' student_id=podiiton.students.id %}" class="btn btn-outline-danger btn-sm">転校</a>
             </td>
         </tr>
-        {% endwith %}
         {% endfor %}
     </tbody>
 </table>

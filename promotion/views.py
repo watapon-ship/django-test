@@ -27,7 +27,7 @@ def student_list(request):
             'year': years.year   # 初期値
         })
 
-    student_list = Students.objects.all().filter(student_podiitons__years__year=years.year).order_by('id')
+    student_list = StudentPodiitons.objects.all().filter(years__year=years.year).order_by('id')
 
     return render(request,
                   'student_list.html',     # 使用するテンプレート
