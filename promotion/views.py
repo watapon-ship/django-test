@@ -30,7 +30,7 @@ def student_list(request):
     student_list = StudentPodiitons.objects.all().filter(years__year=years.year).order_by('id')
 
     return render(request,
-                  'student_list.html',     # 使用するテンプレート
+                  'student_list/list.html',     # 使用するテンプレート
                   dict(form=form, student_list=student_list, year=years.year),
                   )                 # テンプレートに渡すデータ
 
@@ -60,7 +60,7 @@ def student_add(request):
 
     # GET の時
     return render(request,
-        'student_add.html',     # 使用するテンプレート
+        'student_list/add.html',     # 使用するテンプレート
         dict(form=form, sub_form=sub_form))         # テンプレートに渡すデータ
 
 def student_edit(request, student_id=None, year_id=None):
@@ -87,7 +87,7 @@ def student_edit(request, student_id=None, year_id=None):
 
     # GET の時
     return render(request,
-        'student_edit.html',     # 使用するテンプレート
+        'student_list/edit.html',     # 使用するテンプレート
         dict(form=form, sub_form=sub_form, student_id=student_id, year_id=year_id))         # テンプレートに渡すデータ
 
 def student_del(request, student_id=None):
