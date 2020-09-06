@@ -1,22 +1,37 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
-from promotion.models import Students, StudentPodiitons
-from promotion.forms import StudentsForm, StudentPodiitonForm
+from promotion.models import Students, StudentPodiitons, Years
+from promotion.forms import StudentsForm, StudentPodiitonForm, SearchForm
 
+
+# トップ画面
 def index(request):
     return render(request,
                   'index.html',     # 使用するテンプレート
                   {})         # テンプレートに渡すデータ
 
-
+# 生徒名簿
 def student_list(request):
-    student_list = Students.objects.all().order_by('id')
+    #student_list = Students.objects.all().order_by('id')
+    years = Years()
+    form = SearchForm()
+    if request.method == 'POST':
+        # 検索フォームを使っている場合は選択年月で絞る
+        form = SearchForm(request.POST, instance=years)  # POST された request データからフォームを作成
+        years = form.save(commit=False)
+        form.year = years.year
+    else:
+        # 検索フォームを使っていない場合は最新年月で絞る
+        years = Years.objects.order_by("id").last()
+        form.year = years.year
+
+    student_list = Students.objects.all().filter(student_podiitons__years__year=form.year).order_by('id')
+
     return render(request,
                   'student_list.html',     # 使用するテンプレート
-                  {
-                      'student_list': student_list
-                  })                 # テンプレートに渡すデータ
+                  dict(form=form, student_list=student_list),
+                  )                 # テンプレートに渡すデータ
 
 def student_add(request):
     students = Students()
