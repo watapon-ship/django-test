@@ -4,7 +4,7 @@
 {% block title %}生徒一覧{% endblock title %}
 
 {% block content %}
-<h4 class="mt-4 border-bottom">生徒名簿</h4>
+<h4 class="mt-4 border-bottom">生徒名簿 - ●●△学校</h4>
 
 <form action="{% url 'student_list' %}" method="post">
     {% csrf_token %}
@@ -34,44 +34,36 @@
     </thead>
     <tbody>
         {% for student in student_list %}
+        {% with podiitons=student.student_podiitons.first %}
         <tr>
             <td>{{ student.code }}</td>
             <td>{{ student.name }}</td>
             <td>
-                {% for podiitons in student.student_podiitons.all %}
                 {{ podiitons.classes.name }}
-                {% endfor %}
             </td>
             <td>
-                {% for podiitons in student.student_podiitons.all %}
                 {{ podiitons.grade }}班
-                {% endfor %}
             </td>
             <td>
-                {% for podiitons in student.student_podiitons.all %}
                 {{ podiitons.number }}番
-                {% endfor %}
             </td>
             <td>{{ student.sex }}</td>
             <td>{{ student.birth_day }}</td>
             <td>
-                {% for podiitons in student.student_podiitons.all %}
                 {{ podiitons.clubs.name }}:{{ podiitons.clubs_type }}
-                {% endfor %}
             </td>
             <td>
-                {% for podiitons in student.student_podiitons.all %}
                 {{ podiitons.committees.name }}{{ podiitons.committees_type }}
-                {% endfor %}
             </td>
             <td>{{ student.personality }}</td>
             <td>
-                <a href="{% url 'student_edit' student_id=student.id %}" class="btn btn-outline-primary btn-sm">修正</a>
-                <a href="{% url 'student_del' student_id=student.id %}" class="btn btn-outline-danger btn-sm">削除</a>
+                <a href="{% url 'student_edit' student_id=student.id year_id=2017 %}" class="btn btn-outline-primary btn-sm">生徒情報修正</a>
+                <a href="{% url 'student_del' student_id=student.id %}" class="btn btn-outline-danger btn-sm">転校</a>
             </td>
         </tr>
+        {% endwith %}
         {% endfor %}
     </tbody>
 </table>
-<a href="{% url 'student_add' %}" class="btn btn-primary btn-sm my-3">追加</a>
+<a href="{% url 'student_add' %}" class="btn btn-primary btn-sm my-3">転校生追加</a>
 {% endblock content %}

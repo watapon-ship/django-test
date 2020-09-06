@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 
-{% block title %}生徒の編集{% endblock title %}
+{% block title %}年度情報の編集{% endblock title %}
 
 {% block content %}
-    <h4 class="mt-4 mb-5 border-bottom">生徒名簿の編集</h4>
-    <form action="{% url 'student_edit' student_id=student_id year_id=year_id %}" method="post">
+    <h4 class="mt-4 mb-5 border-bottom">年度情報の修正</h4>
+    <form action="{% url 'student_posion' student_id=student.id year_id=year_id %}" method="post">
       {% csrf_token %}
       {% bootstrap_form form layout='horizontal' %}
-      {% bootstrap_form sub_form layout='horizontal' %}
       <div class="form-group row">
         <div class="offset-md-3 col-md-9">
           <button type="submit" class="btn btn-primary">送信</button>
