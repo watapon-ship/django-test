@@ -94,4 +94,3 @@ def student_del(request, student_id=None):
     students = get_object_or_404(Students, pk=student_id)
     students.delete()
     return redirect('student_list')
-

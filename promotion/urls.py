@@ -1,16 +1,25 @@
 from django.urls import path
 
-from . import views
+from .views import student_list, teachar_list
 
 urlpatterns = [
     # トップ
-    path('', views.index, name='index'),
+    path('', student_list.index, name='index'),
     # 生徒一覧
-    path('student_list/', views.student_list, name='student_list'),
+    path('student_list/', student_list.student_list, name='student_list'),
     # 転校生追加
-    path('student_list/add/', views.student_add, name='student_add'),
+    path('student_list/add/', student_list.student_add, name='student_add'),
     # 生徒情報修正
-    path('student_list/edit/<int:student_id>/<int:year_id>/', views.student_edit, name='student_edit'),
+    path('student_list/edit/<int:student_id>/<int:year_id>/', student_list.student_edit, name='student_edit'),
     # 生徒転校
-    path('student_list/del/<int:student_id>/', views.student_del, name='student_del'),
+    path('student_list/del/<int:student_id>/', student_list.student_del, name='student_del'),
+
+    # 教師一覧
+    path('teachar_list/', teachar_list.teachar_list, name='teachar_list'),
+    # 教師追加
+    path('teachar_list/add/', teachar_list.teachar_add, name='teachar_add'),
+    # 教師情報修正
+    path('teachar_list/edit/<int:teachar_id>/<int:year_id>/', teachar_list.teachar_edit, name='teachar_edit'),
+    # 教師転勤
+    path('teachar_list/del/<int:teachar_id>/', teachar_list.teachar_del, name='teachar_del'),
 ]
