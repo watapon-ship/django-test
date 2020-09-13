@@ -1,12 +1,15 @@
+import logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from promotion.models import Students, StudentPodiitons, Years
 from promotion.forms import StudentsForm, StudentPodiitonForm, SearchForm
 
+logger=logging.getLogger(__name__)
 
 # トップ画面
 def index(request):
+    logger.info('開始')
     return render(request,
                   'index.html',     # 使用するテンプレート
                   {})         # テンプレートに渡すデータ

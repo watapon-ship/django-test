@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from promotion.models import Teachars, TeacharPodiitons, Years
 from promotion.forms import TeacharsForm, TeacharPodiitonForm, SearchForm
 
-
 # 教師一覧
 def teachar_list(request):
     years = Years()

@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # Deubg tool bar
+    'django_structlog.middlewares.RequestMiddleware',
+    #'django.middleware.transaction.TransactionMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio.urls'
@@ -134,3 +136,55 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+IMPORT_DIR='C:\\pythonprog\\django-test\\file\\'
+CLAB_LIST_FILE='clab_list.csv'
+COMMITTEES_LIST_FILE='committees_list.csv'
+STUDENT_LIST_FILE='student_list.csv'
+TEACHAR_LIST_FILE='teachar_list.csv'
+FILE_ENCORD='utf-8'
+FILE_LINE='\r\n'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters':{
+
+        'standard':{
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'debug.log',
+            'maxBytes': 50000,
+            'backupCount':2,
+            'formatter':'standard',
+        },
+        'console':{
+
+            'level':'INFO',
+            'class':'logging.StreamHandler',
+            'formatter':'standard'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'main':{
+            'handlers':['file','console'],
+            'level':'DEBUG',
+            'propagate':True,
+
+        }
+    },
+}
