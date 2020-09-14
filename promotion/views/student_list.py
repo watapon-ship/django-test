@@ -4,8 +4,9 @@ from django.http import HttpResponse
 
 from promotion.models import Students, StudentPodiitons, Years
 from promotion.forms import StudentsForm, StudentPodiitonForm, SearchForm
+from portfolio.settings import LOGGING_LEVEL
 
-logger=logging.getLogger(__name__)
+logger=logging.getLogger(LOGGING_LEVEL)
 
 # トップ画面
 def index(request):

@@ -1,8 +1,12 @@
+import logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from promotion.models import Teachars, TeacharPodiitons, Years
 from promotion.forms import TeacharsForm, TeacharPodiitonForm, SearchForm
+from portfolio.settings import LOGGING_LEVEL
+
+logger=logging.getLogger(LOGGING_LEVEL)
 
 # 教師一覧
 def teachar_list(request):

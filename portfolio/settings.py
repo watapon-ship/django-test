@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # Deubg tool bar
-    'django_structlog.middlewares.RequestMiddleware',
+    #'apps.middleware.request_log_middleware',
     #'django.middleware.transaction.TransactionMiddleware',
 ]
 
@@ -137,25 +137,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-IMPORT_DIR='C:\\pythonprog\\django-test\\file\\'
-CLAB_LIST_FILE='clab_list.csv'
-COMMITTEES_LIST_FILE='committees_list.csv'
-STUDENT_LIST_FILE='student_list.csv'
-TEACHAR_LIST_FILE='teachar_list.csv'
-FILE_ENCORD='utf-8'
-FILE_LINE='\r\n'
-
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
-
+    'disable_existing_loggers': True,
     'formatters':{
-
         'standard':{
             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
             'datefmt' : "%d/%b/%Y %H:%M:%S"
-
         },
     },
     'handlers': {
@@ -168,23 +156,23 @@ LOGGING = {
             'formatter':'standard',
         },
         'console':{
-
-            'level':'INFO',
+            'level':'DEBUG',
             'class':'logging.StreamHandler',
             'formatter':'standard'
         },
     },
     'loggers': {
-        'django': {
-            'handlers': ['file'],
+        'promotion':{
+            'handlers':['file','console'],
+            'level':'INFO',
+            'propagate':False,
+
+        },
+        'develop': {
+            'handlers': ['file', 'console'],
             'level': 'DEBUG',
             'propagate': True,
         },
-        'main':{
-            'handlers':['file','console'],
-            'level':'DEBUG',
-            'propagate':True,
-
-        }
     },
 }
+LOGGING_LEVEL='develop'
