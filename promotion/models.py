@@ -53,20 +53,6 @@ class Students(models.Model):
     def __str__(self):
         return self.code +':' + self.name
 
-# 学級
-class Classes(models.Model):
-    db_table = 'CLASSES'
-    verbose_name = '学級'
-    sverbose_name_plural = verbose_name
-    code = models.CharField('クラスコード', max_length=8)
-    grade = models.IntegerField('学年')
-    class_number = models.IntegerField('組')
-    name = models.CharField('クラス名', max_length=50)
-    detail = models.CharField('学級紹介', max_length=200, blank = True, null = True)
-
-    def __str__(self):
-        return self.code + ':' + self.name
-
 # クラブ活動
 class Clubs(models.Model):
     db_table = 'CLUB'
@@ -87,6 +73,21 @@ class Committees(models.Model):
     code = models.CharField('委員会コード', max_length=8)
     name = models.CharField('委員会名',max_length=50)
     detail = models.CharField('委員会説明', max_length=200, blank = True, null = True)
+
+    def __str__(self):
+        return self.code + ':' + self.name
+
+# 学級
+class Classes(models.Model):
+    db_table = 'CLASSES'
+    verbose_name = '学級'
+    sverbose_name_plural = verbose_name
+    code = models.CharField('クラスコード', max_length=8)
+    years = models.ForeignKey(Years, verbose_name="年度", on_delete=models.CASCADE)
+    grade = models.IntegerField('学年')
+    class_number = models.IntegerField('組')
+    name = models.CharField('クラス名', max_length=50)
+    detail = models.CharField('学級紹介', max_length=200, blank = True, null = True)
 
     def __str__(self):
         return self.code + ':' + self.name
