@@ -11,80 +11,15 @@ from portfolio.settings import LOGGING_LEVEL
 #logger = logging.getLogger('development')
 logger=logging.getLogger(LOGGING_LEVEL)
 
-CLASSES_LIST_FILE_FORMAT = [
-    {
-        'key' : 'data_type',
-    },
-    {
-        'key' : 'code',
-    },
-    {
-        'key' : 'grade',
-    },
-    {
-        'key' : 'class_number',
-    },
-    {
-        'key' : 'name',
-    },
-    {
-        'key' : 'detail',
-    },
-]
-
-CLAB_LIST_FILE_FORMAT = [
-    {
-        'key' : 'data_type',
-    },
-    {
-        'key' : 'code',
-    },
-    {
-        'key' : 'name',
-    },
-    {
-        'key' : 'detail',
-    },
-]
-
-COMMITTEES_LIST_FILE_FORMAT = [
-    {
-        'key' : 'data_type',
-    },
-    {
-        'key' : 'code',
-    },
-    {
-        'key' : 'name',
-    },
-    {
-        'key' : 'detail',
-    },
-]
-
-STUDENT_LIST_FILE_FORMAT = [
-    {
-        'key' : 'data_type',
-    },
-    {
-        'key' : 'code',
-    },
-    {
-        'key' : 'name',
-    },
-    {
-        'key' : 'sex',
-    },
-    {
-        'key' : 'birth_day',
-    },
-    {
-        'key' : 'personality',
-    },
-    {
-        'key' : 'sex',
-    },
-]
+REQUIRED = {
+    'CLASSES_LIST_FILE' : [
+        'code',
+        'grade',
+        'class_number',
+        'name',
+        'detail',
+    ]
+}
 
 #@django.db.transaction.commit_manually
 class Command(BaseCommand): 
@@ -101,32 +36,32 @@ class Command(BaseCommand):
             if years :
                 year = years.year
             
-            logger.info('ファイルチェック-クラブ活動情報更新')
-            with open(PROMOTION['IMPORT_DIR'] + PROMOTION['CLAB_LIST_FILE'], "r", encoding=PROMOTION['FILE_ENCORD'], errors="", newline="" ) as csv_file:
-                f = csv.DictReader(csv_file, delimiter=",", doublequote=True, lineterminator=PROMOTION['FILE_LINE'], quotechar='"', skipinitialspace=True)
-                for row in f:
-                    # 必須チェック
-                    for field in CLAB_LIST_FILE_FORMAT:
-                        if field['key'] not in row : 
-                            logger.error('必須チェックエラー-クラブ活動情報CSVの' + field['key'] + 'が存在しません。')
+            # logger.info('ファイルチェック-クラブ活動情報更新')
+            # with open(PROMOTION['IMPORT_DIR'] + PROMOTION['CLAB_LIST_FILE'], "r", encoding=PROMOTION['FILE_ENCORD'], errors="", newline="" ) as csv_file:
+            #     f = csv.DictReader(csv_file, delimiter=",", doublequote=True, lineterminator=PROMOTION['FILE_LINE'], quotechar='"', skipinitialspace=True)
+            #     for row in f:
+            #         # 必須チェック
+            #         for field in CLAB_LIST_FILE_FORMAT:
+            #             if field['key'] not in row : 
+            #                 logger.error('必須チェックエラー-クラブ活動情報CSVの' + field['key'] + 'が存在しません。')
 
-            logger.info('ファイルチェック-委員会情報更新')
-            with open(PROMOTION['IMPORT_DIR'] + PROMOTION['COMMITTEES_LIST_FILE'], "r", encoding=PROMOTION['FILE_ENCORD'], errors="", newline="" ) as csv_file:
-                f = csv.DictReader(csv_file, delimiter=",", doublequote=True, lineterminator=PROMOTION['FILE_LINE'], quotechar='"', skipinitialspace=True)
-                for row in f:
-                    # 必須チェック
-                    for field in COMMITTEES_LIST_FILE_FORMAT:
-                        if field['key'] not in row : 
-                            logger.error('必須チェックエラー-委員会情報CSVの' + field['key'] + 'が存在しません。')
+            # logger.info('ファイルチェック-委員会情報更新')
+            # with open(PROMOTION['IMPORT_DIR'] + PROMOTION['COMMITTEES_LIST_FILE'], "r", encoding=PROMOTION['FILE_ENCORD'], errors="", newline="" ) as csv_file:
+            #     f = csv.DictReader(csv_file, delimiter=",", doublequote=True, lineterminator=PROMOTION['FILE_LINE'], quotechar='"', skipinitialspace=True)
+            #     for row in f:
+            #         # 必須チェック
+            #         for field in COMMITTEES_LIST_FILE_FORMAT:
+            #             if field['key'] not in row : 
+            #                 logger.error('必須チェックエラー-委員会情報CSVの' + field['key'] + 'が存在しません。')
 
-            logger.info('ファイルチェック-生徒情報更新')
-            with open(PROMOTION['IMPORT_DIR'] + PROMOTION['STUDENT_LIST_FILE'], "r", encoding=PROMOTION['FILE_ENCORD'], errors="", newline="" ) as csv_file:
-                f = csv.DictReader(csv_file, delimiter=",", doublequote=True, lineterminator=PROMOTION['FILE_LINE'], quotechar='"', skipinitialspace=True)
-                for row in f:
-                    # 必須チェック
-                    for field in STUDENT_LIST_FILE_FORMAT:
-                        if field['key'] not in row : 
-                            logger.error('必須チェックエラー-生徒情報CSVの' + field['key'] + 'が存在しません。')
+            # logger.info('ファイルチェック-生徒情報更新')
+            # with open(PROMOTION['IMPORT_DIR'] + PROMOTION['STUDENT_LIST_FILE'], "r", encoding=PROMOTION['FILE_ENCORD'], errors="", newline="" ) as csv_file:
+            #     f = csv.DictReader(csv_file, delimiter=",", doublequote=True, lineterminator=PROMOTION['FILE_LINE'], quotechar='"', skipinitialspace=True)
+            #     for row in f:
+            #         # 必須チェック
+            #         for field in STUDENT_LIST_FILE_FORMAT:
+            #             if field['key'] not in row : 
+            #                 logger.error('必須チェックエラー-生徒情報CSVの' + field['key'] + 'が存在しません。')
 
             logger.info('ファイルチェック-教職員情報更新')
             logger.info('年度更新-クラブ活動情報更新')
