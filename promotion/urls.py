@@ -1,6 +1,8 @@
 from django.urls import path
 
+from rest_framework import routers
 from .views import student_list, teachar_list
+from .views.api import YearsViewSet, ClassesViewSet, ClubsViewSet, CommitteesViewSet, StudentPodiitonsViewSet, TeacharPodiitonsViewSet
 
 urlpatterns = [
     # トップ
@@ -23,3 +25,11 @@ urlpatterns = [
     # 教師転勤
     path('teachar_list/del/<int:teachar_id>/', teachar_list.teachar_del, name='teachar_del'),
 ]
+
+router = routers.DefaultRouter()
+router.register(r'years', YearsViewSet)
+router.register(r'classes', ClassesViewSet)
+router.register(r'clubs', ClubsViewSet)
+router.register(r'committees', CommitteesViewSet)
+router.register(r'student', StudentPodiitonsViewSet)
+router.register(r'teachar', TeacharPodiitonsViewSet)

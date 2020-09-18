@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',           # django-bootstrap4
     'debug_toolbar',
+    'rest_framework',
 ]
 
 # INTERNAL_IPS = [
